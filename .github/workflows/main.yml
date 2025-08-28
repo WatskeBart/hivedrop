@@ -3,9 +3,11 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
+  schedule:
+    - cron: '0 22 * * 0' # Every sunday at 2200Z
 
 env:
   REGISTRY: ghcr.io
@@ -23,7 +25,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
@@ -33,10 +35,7 @@ jobs:
 
     - name: Download files with offvsix
       run: |
-
         offvsix --file pollen/vscode-extensions.txt --destination honey/vscode-extensions/
-        
-        ls -la honey/vscode-extensions/
 
     - name: Log in to Container Registry
       uses: docker/login-action@v3
@@ -52,7 +51,8 @@ jobs:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
           type=ref,event=branch
-          type=raw,value={{date 'YYYYMMDDTHHMM' tz='Europe/Amsterdam'}}
+          type=raw,value=latest
+          type=raw,value={{date 'YYYY' tz='UTC'}}-{{date 'WW' tz='UTC'}}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
