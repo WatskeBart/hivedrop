@@ -1,1 +1,3 @@
-honey/
+*.vsix
+*.msi
+*.exe
