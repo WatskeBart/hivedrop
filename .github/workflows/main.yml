@@ -52,8 +52,7 @@ jobs:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
           type=ref,event=branch
-          type=ref,event=pr
-          type=sha,prefix=sha-
+          type=raw,value={{date 'YYYYMMDDTHHMM' tz='Europe/Amsterdam'}}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
