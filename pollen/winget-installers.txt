@@ -2,9 +2,9 @@ Microsoft.WindowsTerminal
 7zip.7zip
 Git.Git
 VideoLAN.VLC
-RedHat.Podman
-RedHat.VirtViewer
+Docker.DockerDesktop
 Microsoft.PowerShell
+Microsoft.VisualStudioCode
 Gyan.FFmpeg
 Helm.Helm
 Kubernetes.kubectl
@@ -15,3 +15,5 @@ OpenJS.NodeJS.LTS
 Notepad++.Notepad++
 NickeManarin.ScreenToGif
 KeePassXCTeam.KeePassXC
+JanDeDobbeleer.OhMyPosh
+Bostrot.WSLManager
