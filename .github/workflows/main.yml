@@ -20,6 +20,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Update winget sources
+      run: |
+        winget source update
+      shell: pwsh
+
     - name: Download installers with custom script
       run: |
         .\scripts\winget-downloader.ps1 -PackageListFile "pollen/winget-installers.txt" -DownloadDirectory "honey/winget-installers"
