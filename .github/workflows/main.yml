@@ -14,6 +14,23 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  download-winget-apps:
+    runs-on: windows-2025
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download installers with custom script
+      run: |
+        .\scripts\winget-downloader.ps1 -PackageListFile "pollen/winget-installers.txt" -DownloadDirectory "honey/winget-installers"
+      shell: pwsh
+
+    - name: Upload winget artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: winget-installers
+        path: honey/winget-installers/
+
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
@@ -23,6 +40,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Download winget artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: winget-installers
+        path: honey/winget-installers/
 
     - name: Set up Python
       uses: actions/setup-python@v5

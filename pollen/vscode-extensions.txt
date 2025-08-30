@@ -21,3 +21,4 @@ redhat.vscode-yaml
 jeff-hykin.better-dockerfile-syntax
 ParthR2031.colorful-comments
 ms-vscode-remote.remote-wsl
+vivaxy.vscode-conventional-commits

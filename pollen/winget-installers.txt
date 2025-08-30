@@ -1,0 +1,17 @@
+Microsoft.WindowsTerminal
+7zip.7zip
+Git.Git
+VideoLAN.VLC
+RedHat.Podman
+RedHat.VirtViewer
+Microsoft.PowerShell
+Gyan.FFmpeg
+Helm.Helm
+Kubernetes.kubectl
+ahmetb.kubectx
+ahmetb.kubens
+Python.Python.3.12
+OpenJS.NodeJS.LTS
+Notepad++.Notepad++
+NickeManarin.ScreenToGif
+KeePassXCTeam.KeePassXC
