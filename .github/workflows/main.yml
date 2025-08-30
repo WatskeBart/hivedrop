@@ -4,8 +4,8 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
   schedule:
     - cron: '0 22 * * 0' # Every sunday at 2200Z
 
@@ -20,6 +20,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Update winget sources
+      run: |
+        winget source update
+      shell: pwsh
+
     - name: Download installers with custom script
       run: |
         .\scripts\winget-downloader.ps1 -PackageListFile "pollen/winget-installers.txt" -DownloadDirectory "honey/winget-installers"
@@ -33,6 +38,7 @@ jobs:
 
   build-and-push:
     runs-on: ubuntu-latest
+    needs: download-winget-apps
     permissions:
       contents: read
       packages: write
