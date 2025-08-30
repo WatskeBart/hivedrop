@@ -27,7 +27,7 @@ foreach ($packageId in $packageIds) {
     
     try {
         # Get package info from winget
-        $wingetOutput = winget show $packageId.Trim() 2>&1
+        $wingetOutput = winget show $packageId.Trim() --accept-source-agreements 2>&1
         
         if ($LASTEXITCODE -ne 0) {
             Write-Warning "Failed to get info for package: $packageId"
