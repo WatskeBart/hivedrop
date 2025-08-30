@@ -68,19 +68,37 @@ foreach ($packageId in $packageIds) {
             continue
         }
         
-        # Download the installer
+        # Download the installer with retry logic
         Write-Host "Downloading to: $downloadPath"
         
-        try {
-            Invoke-WebRequest -Uri $installerUrl -OutFile $downloadPath -UseBasicParsing
-            Write-Host "Successfully downloaded: $filename" -ForegroundColor Green
-        }
-        catch {
-            Write-Error "Failed to download $packageId`: $($_.Exception.Message)"
-            # Clean up partial download if it exists
-            if (Test-Path $downloadPath) {
-                Remove-Item $downloadPath -Force
+        $maxRetries = 3
+        $retryCount = 0
+        $downloaded = $false
+        
+        while (-not $downloaded -and $retryCount -lt $maxRetries) {
+            try {
+                Invoke-WebRequest -Uri $installerUrl -OutFile $downloadPath -UseBasicParsing -TimeoutSec 300
+                $downloaded = $true
+                Write-Host "Successfully downloaded: $filename" -ForegroundColor Green
             }
+            catch {
+                $retryCount++
+                Write-Warning "Download attempt $retryCount failed: $($_.Exception.Message)"
+                
+                if ($retryCount -lt $maxRetries) {
+                    Write-Host "Retrying in 5 seconds..."
+                    Start-Sleep -Seconds 5
+                }
+                
+                # Clean up partial download
+                if (Test-Path $downloadPath) {
+                    Remove-Item $downloadPath -Force
+                }
+            }
+        }
+        
+        if (-not $downloaded) {
+            Write-Warning "Failed to download $packageId after $maxRetries attempts"
         }
     }
     catch {
