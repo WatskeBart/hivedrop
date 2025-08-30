@@ -52,7 +52,7 @@ Auto-generated directory containing downloaded files, served by Nginx.
 ### Adding Packages
 
 1. **VS Code Extensions**: Add extension ID to `pollen/vscode-extensions.txt`
-2. **Software**: Add package ID to `pollen/winget-packages.txt`
+2. **Software**: Add package ID to `pollen/winget-installers.txt`
 
 Find package IDs:
 - VS Code: [Marketplace](https://marketplace.visualstudio.com/vscode) URLs contain IDs
