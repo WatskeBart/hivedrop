@@ -1,0 +1,63 @@
+.mdl-button--icon {
+    margin-left: 10px !important;
+}
+
+.mdl-list__item-avatar {
+    text-align: center;
+}
+
+.second_line {
+    font-size: 14px;
+    font-weight: 400;    
+    letter-spacing: 0;    
+    line-height: 18px;  
+    color: rgba(0,0,0,.54);    
+    display: block;    
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#original_fancyindex {
+    display: none;
+}
+
+.search-novisible {
+    display: none;
+}
+
+.resultsearch-novisible {
+    display: none;
+}
+
+.fullwidth {
+    width: calc(100% - 40px);
+}
+
+.getinfo-novisible {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .no-mobile {
+        display: none;
+    }
+}
+
+.mdl-dialog__content, .mdl-list__item-primary-content {
+    word-break: break-all;
+}
+
+.mdl-button, .mdl-list__item-avatar {
+    flex-shrink: 0;
+}
+
+#currentTitle, #currentPathTitle {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}
