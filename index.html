@@ -12,96 +12,66 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
-            background: 
-                radial-gradient(circle at 20px 20px, transparent 0px, transparent 18px, rgba(255,193,7,0.1) 18px, rgba(255,193,7,0.1) 20px),
-                radial-gradient(circle at 60px 60px, transparent 0px, transparent 18px, rgba(255,193,7,0.08) 18px, rgba(255,193,7,0.08) 20px),
-                linear-gradient(135deg, #2c3e50 0%, #34495e 25%, #3a4a3e 50%, #2c3e50 100%);
-            background-size: 40px 40px, 120px 120px, 100% 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #ecf0f1;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%),
-                polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
-            background-size: 60px 52px;
-            background-position: 0 0, 30px 26px;
-            opacity: 0.05;
-            z-index: -1;
         }
         
         .logo {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: bold;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            position: relative;
+            margin-bottom: 1rem;
             color: #f1c40f;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
         .logo::before {
             content: "🍯";
-            font-size: 3rem;
-            position: absolute;
-            left: -4rem;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        
-        .enter-btn {
-            background: linear-gradient(45deg, rgba(241,196,15,0.2), rgba(230,126,34,0.2));
-            border: 2px solid #f1c40f;
-            color: #f1c40f;
-            font-size: 1.5rem;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(241,196,15,0.2);
-        }
-        
-        .enter-btn:hover {
-            background: linear-gradient(45deg, #f1c40f, #e67e22);
-            color: #2c3e50;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(241,196,15,0.4);
+            font-size: 2.5rem;
         }
         
         .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
             text-align: center;
         }
         
+        .enter-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .enter-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+        
         @media (max-width: 768px) {
             .logo {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             .logo::before {
-                font-size: 2rem;
-                left: -3rem;
+                font-size: 1.8rem;
             }
             .enter-btn {
-                font-size: 1.2rem;
-                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                padding: 0.8rem 1.5rem;
             }
         }
     </style>
