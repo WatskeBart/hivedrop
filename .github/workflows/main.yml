@@ -83,6 +83,11 @@ jobs:
           type=raw,value=latest
           type=raw,value={{date 'YYYY' tz='UTC'}}-{{date 'WW' tz='UTC'}}
 
+    - name: Replace build tag in index.html
+      run: |
+        BUILD_TAG=$(date -u '+%Y-%U')
+        sed -i "s/{{BUILD_TAG}}/$BUILD_TAG/g" index.html
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
