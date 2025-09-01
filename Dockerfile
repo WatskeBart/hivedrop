@@ -24,6 +24,7 @@ COPY --from=builder /nginx-*/objs/ngx_http_fancyindex_module.so /usr/lib/nginx/m
 USER nginx
 
 COPY index.html /usr/share/nginx/html/
+COPY ./favicon/ /usr/share/nginx/html
 COPY ./honey/ /usr/share/nginx/html/honey/
 COPY ./fancyindex/ /usr/share/nginx/html/fancyindex/
 COPY nginx.conf /etc/nginx/nginx.conf
