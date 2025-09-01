@@ -1,0 +1,2 @@
+# Treat all text files as text and normalize all line endings to LF (CRLF breaks scripts)
+* text eol=lf
