@@ -4,8 +4,6 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
   schedule:
     - cron: '0 22 * * 0' # Every sunday at 2200Z
 
@@ -19,6 +17,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event_name == 'schedule' && 'main' || github.ref }}
 
     - name: Update winget sources
       run: |
@@ -46,6 +46,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event_name == 'schedule' && 'main' || github.ref }}
 
     - name: Download winget artifacts
       uses: actions/download-artifact@v4
