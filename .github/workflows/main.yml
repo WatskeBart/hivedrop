@@ -5,8 +5,7 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 22 * * 0' # Every sunday at 2200Z
-
+    - cron: '0 1 * * 1' # Every monday at 01:00 UTC
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -87,7 +86,7 @@ jobs:
 
     - name: Replace build tag in index.html
       run: |
-        BUILD_TAG=$(date -u '+%Y-%U')
+        BUILD_TAG=$(date -u '+%Y-%V')
         sed -i "s/{{BUILD_TAG}}/$BUILD_TAG/g" index.html
 
     - name: Build and push Docker image
