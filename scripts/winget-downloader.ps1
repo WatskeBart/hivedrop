@@ -34,12 +34,35 @@ foreach ($packageId in $packageIds) {
             continue
         }
         
-        # Parse installer URL from winget output
+        # Parse package information from winget output
+        $packageName = $null
+        $packageVersion = $null
         $installerUrl = $null
+        
         foreach ($line in $wingetOutput) {
-            if ($line -match "^\s*Installer Url:\s*(.+)$") {
+            if ($line -match "^\s*Found\s+(.+?)\s+\[(.+?)\]") {
+                $packageName = $matches[1].Trim()
+                # Package ID is in brackets, but we want the display name
+            }
+            elseif ($line -match "^\s*Version:\s*(.+)$") {
+                $packageVersion = $matches[1].Trim()
+            }
+            elseif ($line -match "^\s*Installer Url:\s*(.+)$") {
                 $installerUrl = $matches[1].Trim()
-                break
+            }
+        }
+        
+        # If packageName is still null, try to extract from Publisher/Name format
+        if (-not $packageName) {
+            foreach ($line in $wingetOutput) {
+                if ($line -match "^\s*Package Name:\s*(.+)$") {
+                    $packageName = $matches[1].Trim()
+                    break
+                }
+                elseif ($line -match "^\s*Name:\s*(.+)$") {
+                    $packageName = $matches[1].Trim()
+                    break
+                }
             }
         }
         
@@ -48,18 +71,34 @@ foreach ($packageId in $packageIds) {
             continue
         }
         
-        Write-Host "Installer URL: $installerUrl"
-        
-        # Extract filename from URL
-        $uri = [System.Uri]$installerUrl
-        $filename = Split-Path $uri.AbsolutePath -Leaf
-        
-        # Fallback filename for possible URL's containing trailing / or query parameters
-        if (-not $filename) {
-            $filename = "$packageId-installer.exe"
-            Write-Host "Using default filename: $filename"
+        if (-not $packageName -or -not $packageVersion) {
+            Write-Warning "Could not extract package name or version for: $packageId"
+            Write-Warning "Name: $packageName, Version: $packageVersion"
+            Write-Warning "Falling back to package ID for filename"
+            $packageName = $packageId
+            $packageVersion = "unknown"
         }
         
+        Write-Host "Package Name: $packageName"
+        Write-Host "Package Version: $packageVersion"
+        Write-Host "Installer URL: $installerUrl"
+        
+        # Extract file extension from URL
+        $uri = [System.Uri]$installerUrl
+        $originalFilename = Split-Path $uri.AbsolutePath -Leaf
+        $extension = [System.IO.Path]::GetExtension($originalFilename)
+        
+        # If no extension found, default to .unknown
+        if (-not $extension) {
+            $extension = ".unknown"
+        }
+        
+        # Clean package name for filename (remove invalid characters and replace spaces)
+        $cleanPackageName = $packageName -replace '[<>:"/\\|?*]', '-' -replace '\s+', '_'
+        $cleanVersion = $packageVersion -replace '[<>:"/\\|?*]', '-' -replace '\s+', '_'
+        
+        # Generate custom filename
+        $filename = "$cleanPackageName-$cleanVersion$extension"
         $downloadPath = Join-Path $DownloadDirectory $filename
         
         # Check if file already exists
@@ -69,7 +108,7 @@ foreach ($packageId in $packageIds) {
         }
         
         # Download the installer with retry logic
-        Write-Host "Downloading to: $downloadPath"
+        Write-Host "Downloading to: $filename"
         
         $maxRetries = 3
         $retryCount = 0
