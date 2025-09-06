@@ -16,4 +16,3 @@ Notepad++.Notepad++
 NickeManarin.ScreenToGif
 KeePassXCTeam.KeePassXC
 JanDeDobbeleer.OhMyPosh
-Bostrot.WSLManager
