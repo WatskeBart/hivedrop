@@ -21,6 +21,5 @@ jeff-hykin.better-dockerfile-syntax
 ParthR2031.colorful-comments
 vivaxy.vscode-conventional-commits
 aorih.kubernetes-file-generator
-leonkohli.copy4ai
 charliermarsh.ruff
 the0807.uv-toolkit
